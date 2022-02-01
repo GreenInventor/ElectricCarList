@@ -26,12 +26,12 @@ public class ListViewer
 		
 		while(again)
 		{
-			System.out.println("1: Add electric car");
+			System.out.println("\n1: Add electric car");
 			System.out.println("2: Edit electric car");
 			System.out.println("3: Delete electric car");
 			System.out.println("4: View electric car list");
 			System.out.println("5: Exit program");
-			System.out.print("Please type in an option: ");
+			System.out.print("Please type in an option (number): ");
 			
 			try 
 			{
@@ -75,33 +75,41 @@ public class ListViewer
 		in.close();
 	}
 	
-	private static void addCar() // TODO not working, error with sql syntax
+	private static void addCar()
 	{
-		in.nextLine(); //Clear scanner buffer
-		System.out.print("Please type in a make: ");
-		String make = in.nextLine();
-		System.out.print("Please type in a model: ");
-		String model = in.nextLine();
-		System.out.print("Please type in a year: ");
-		int year = in.nextInt();
-		System.out.print("Please type in a price: ");
-		double price = in.nextDouble();
-		System.out.print("Please type in a range: ");
-		int range = in.nextInt();
-		System.out.print("Please type in a top speed: ");
-		int topspeed = in.nextInt();
-		System.out.print("Please type in a 0-60 acceleration: ");
-		double zerosixtyacceleration = in.nextDouble();
-		System.out.print("Please type in a charge speed: ");
-		int chargepower = in.nextInt();
-		ElectricCar toAdd = new ElectricCar(make, model, year, price, range, topspeed, zerosixtyacceleration, chargepower);
-		ech.insertCar(toAdd);
+		try
+		{
+			in.nextLine(); //Clear scanner buffer
+			System.out.print("Please type in a make: ");
+			String make = in.nextLine();
+			System.out.print("Please type in a model: ");
+			String model = in.nextLine();
+			System.out.print("Please type in a year (number): ");
+			int year = in.nextInt();
+			System.out.print("Please type in a price (number): $");
+			double price = in.nextDouble();
+			System.out.print("Please type in a range (number): ");
+			int range = in.nextInt();
+			System.out.print("Please type in a top speed (number): ");
+			int topspeed = in.nextInt();
+			System.out.print("Please type in a 0-60 acceleration (number): ");
+			double zerosixtyacceleration = in.nextDouble();
+			System.out.print("Please type in a charge speed (number): ");
+			int chargepower = in.nextInt();
+			ElectricCar toAdd = new ElectricCar(make, model, year, price, range, topspeed, zerosixtyacceleration, chargepower);
+			ech.insertCar(toAdd);
+		}
+		catch (InputMismatchException i)
+		{
+			System.out.println("Your input wasn't correct. Please type in a word or a number where stated. The list wasn't changed");
+		}
+		
 	}
 	
-	private static void editCar() //untested because addCar and viewCar don't work
+	private static void editCar()
 	{
-		int search = 0;
 		
+		int search = 0;
 		while(search == 0)
 		{
 			System.out.println("How would you like to search?");
@@ -114,8 +122,8 @@ public class ListViewer
 			System.out.println("7: Search by 0-60 Acceleration");
 			System.out.println("8: Search by Charge Speed");
 			System.out.println("9: Search by ID");
-			System.out.print("Please type in a selection: ");
-			
+			System.out.print("Please type in a selection (number): ");
+				
 			try 
 			{
 				search = in.nextInt();
@@ -126,183 +134,205 @@ public class ListViewer
 			}
 			catch(InputMismatchException i) 
 			{
-				System.out.println("Use the input (1, 2, 3, 4, 5, 6, 7, or 8) for your selection.");
+				System.out.println("Use the input (1, 2, 3, 4, 5, 6, 7, 8, or 9) for your selection.");
 				search = 0;
 			}
 		}
-		
-		List<ElectricCar> foundItems;
-		if (search == 1) 
+		try
 		{
-			System.out.print("Please type in the make: ");
-			String make = in.nextLine();
-			foundItems = ech.searchForElectricCarByMake(make);
-		}
-		else if(search == 2)
-		{
-			System.out.print("Please type in the model: ");
-			String model = in.nextLine();
-			foundItems = ech.searchForElectricCarByModel(model);
-		}
-		else if(search == 3)
-		{
-			System.out.print("Please type in the year: ");
-			int year = in.nextInt();
-			foundItems = ech.searchForElectricCarByYear(year);
-		}
-		else if(search == 4)
-		{
-			System.out.print("Please type in the price: ");
-			double price = in.nextDouble();
-			foundItems = ech.searchForElectricCarByPrice(price);
-		}
-		else if(search == 5)
-		{
-			System.out.print("Please type in the range: ");
-			int range = in.nextInt();
-			foundItems = ech.searchForElectricCarByRange(range);
-		}
-		else if(search == 6)
-		{
-			System.out.print("Please type in the top speed: ");
-			int topspeed = in.nextInt();
-			foundItems = ech.searchForElectricCarByTopSpeed(topspeed);
-		}
-		else if(search == 7)
-		{
-			System.out.print("Please type in the 0-60 acceleration: ");
-			double zerosixtyacceleration = in.nextDouble();
-			foundItems = ech.searchForElectricCarByZeroSixtyAcceleration(zerosixtyacceleration);
-		}
-		else if(search == 8)
-		{
-			System.out.print("Please type in the charge speed: ");
-			int chargepower = in.nextInt();
-			foundItems = ech.searchForElectricCarByChargePower(chargepower);
-		}
-		else
-		{
-			foundItems = ech.showAllCars();
-		}
-
-		if (!foundItems.isEmpty()) {
-			System.out.println("Found Results.");
-			for (ElectricCar ec : foundItems) {
-				System.out.println("[ " + ec.getId() + " ] " + ec.getCarDetails());
+			List<ElectricCar> foundItems;
+			if (search == 1) 
+			{
+				System.out.print("Please type in the make: ");
+				String make = in.nextLine();
+				foundItems = ech.searchForElectricCarByMake(make);
 			}
-			System.out.print("Which electric car ID would you like to edit: ");
-			int idToEdit = in.nextInt();
-
-			ElectricCar toEdit = ech.searchForElectricCarById(idToEdit);
-			System.out.println("Retrieved " + toEdit.getCarDetails());
-			System.out.println("1: Update Make");
-			System.out.println("2: Update Model");
-			System.out.println("3: Update Year");
-			System.out.println("4: Update Price");
-			System.out.println("5: Update Range");
-			System.out.println("6: Update Top Speed");
-			System.out.println("7: Update 0-60 Acceleration");
-			System.out.println("8: Update Charge Speed");
-			System.out.print("Please type in a selection: ");
-			int update = in.nextInt();
-			in.nextLine();
-
-			if (update == 1) 
+			else if(search == 2)
 			{
-				System.out.print("Please type in new make: ");
-				String newMake = in.nextLine();
-				toEdit.setMake(newMake);
-			} 
-			else if (update == 2) 
-			{
-				System.out.print("Please type in new model: ");
-				String newModel = in.nextLine();
-				toEdit.setModel(newModel);
+				System.out.print("Please type in the model: ");
+				String model = in.nextLine();
+				foundItems = ech.searchForElectricCarByModel(model);
 			}
-			else if (update == 3) 
+			else if(search == 3)
 			{
-				System.out.print("Please type in new year: ");
-				int newYear = in.nextInt();
-				toEdit.setYear(newYear);
+				System.out.print("Please type in the year (number): ");
+				int year = in.nextInt();
+				foundItems = ech.searchForElectricCarByYear(year);
 			}
-			else if (update == 4) 
+			else if(search == 4)
 			{
-				System.out.print("Please type in new price: ");
-				double newPrice = in.nextDouble();
-				toEdit.setPrice(newPrice);
+				System.out.print("Please type in the price (number): $");
+				double price = in.nextDouble();
+				foundItems = ech.searchForElectricCarByPrice(price);
 			}
-			else if (update == 5) 
+			else if(search == 5)
 			{
-				System.out.print("Please type in new range: ");
-				int newRange = in.nextInt();
-				toEdit.setRange(newRange);
+				System.out.print("Please type in the range (number): ");
+				int range = in.nextInt();
+				foundItems = ech.searchForElectricCarByMaxMiles(range);
 			}
-			else if (update == 6) 
+			else if(search == 6)
 			{
-				System.out.print("Please type in new top speed: ");
-				int newTopspeed = in.nextInt();
-				toEdit.setTopspeed(newTopspeed);
+				System.out.print("Please type in the top speed (number): ");
+				int topspeed = in.nextInt();
+				foundItems = ech.searchForElectricCarByTopSpeed(topspeed);
 			}
-			else if (update == 7) 
+			else if(search == 7)
 			{
-				System.out.print("Please type in new 0-60 acceleration: ");
-				double newZerosixtyacceleration = in.nextDouble();
-				toEdit.setZerosixtyacceleration(newZerosixtyacceleration);
+				System.out.print("Please type in the 0-60 acceleration (number): ");
+				double zerosixtyacceleration = in.nextDouble();
+				foundItems = ech.searchForElectricCarByZeroSixtyAcceleration(zerosixtyacceleration);
+			}
+			else if(search == 8)
+			{
+				System.out.print("Please type in the charge speed (number): ");
+				int chargepower = in.nextInt();
+				foundItems = ech.searchForElectricCarByChargePower(chargepower);
 			}
 			else
 			{
-				System.out.print("Please type in new charge speed: ");
-				int newChargepower = in.nextInt();
-				toEdit.setChargepower(newChargepower);
+				foundItems = ech.showAllCars();
 			}
-			ech.updateCar(toEdit);
-		} 
-		else 
+	
+			if (!foundItems.isEmpty()) {
+				System.out.println("Found Results.");
+				for (ElectricCar ec : foundItems) {
+					System.out.println("[ " + ec.getId() + " ] " + ec.getCarDetails());
+				}
+				System.out.print("Which electric car ID would you like to edit (number): ");
+				int idToEdit = in.nextInt();
+	
+				ElectricCar toEdit = ech.searchForElectricCarById(idToEdit);
+				System.out.println("Retrieved " + toEdit.getCarDetails());
+				System.out.println("1: Update Make");
+				System.out.println("2: Update Model");
+				System.out.println("3: Update Year");
+				System.out.println("4: Update Price");
+				System.out.println("5: Update Range");
+				System.out.println("6: Update Top Speed");
+				System.out.println("7: Update 0-60 Acceleration");
+				System.out.println("8: Update Charge Speed");
+				System.out.print("Please type in a selection (number): ");
+				int update = in.nextInt();
+				in.nextLine();
+	
+				if (update == 1) 
+				{
+					System.out.print("Please type in new make: ");
+					String newMake = in.nextLine();
+					toEdit.setMake(newMake);
+				} 
+				else if (update == 2) 
+				{
+					System.out.print("Please type in new model: ");
+					String newModel = in.nextLine();
+					toEdit.setModel(newModel);
+				}
+				else if (update == 3) 
+				{
+					System.out.print("Please type in new year (number): ");
+					int newYear = in.nextInt();
+					toEdit.setYear(newYear);
+				}
+				else if (update == 4) 
+				{
+					System.out.print("Please type in new price (number): $");
+					double newPrice = in.nextDouble();
+					toEdit.setPrice(newPrice);
+				}
+				else if (update == 5) 
+				{
+					System.out.print("Please type in new range (number): ");
+					int newRange = in.nextInt();
+					toEdit.setMaxmiles(newRange);
+				}
+				else if (update == 6) 
+				{
+					System.out.print("Please type in new top speed (number): ");
+					int newTopspeed = in.nextInt();
+					toEdit.setTopspeed(newTopspeed);
+				}
+				else if (update == 7) 
+				{
+					System.out.print("Please type in new 0-60 acceleration (number): ");
+					double newZerosixtyacceleration = in.nextDouble();
+					toEdit.setZerosixtyacceleration(newZerosixtyacceleration);
+				}
+				else
+				{
+					System.out.print("Please type in new charge speed (number): ");
+					int newChargepower = in.nextInt();
+					toEdit.setChargepower(newChargepower);
+				}
+				ech.updateCar(toEdit);
+			} 
+			else 
+			{
+				System.out.println("-----> No results were found in your search");
+			}
+		}
+		catch (InputMismatchException i)
 		{
-			System.out.println("-----> No results were found in your search");
+			System.out.println("Your input wasn't correct. Please type in a word or a number where stated. The list wasn't changed");
 		}
 	}
 	
-	private static void deleteCar() //untested because addCar and viewCar don't work
+	private static void deleteCar()
 	{
-		System.out.println("1: Search for car by ID");
-		System.out.println("2: Search for car by characteristics");
-		System.out.print("Please type in a selection: ");
-		int decision = in.nextInt();
-		
-		if(decision == 1)
+		try
 		{
-			System.out.println("List of all electric cars:");
-			viewCars();
-			System.out.print("Please type in ID of car you would like to delete: ");
-			int idToDelete = in.nextInt();
-			ElectricCar toDelete = ech.searchForElectricCarById(idToDelete);
-			ech.deleteCar(toDelete);
+			System.out.println("1: Search for car by ID");
+			System.out.println("2: Search for car by characteristics");
+			System.out.print("Please type in a selection (number): ");
+			int decision = in.nextInt();
+			
+			if(decision == 1)
+			{
+				System.out.println("List of all electric cars:");
+				viewCars();
+				System.out.print("Please type in ID of car you would like to delete (number): ");
+				int idToDelete = in.nextInt();
+				ElectricCar toDelete = ech.searchForElectricCarById(idToDelete);
+				ech.deleteCar(toDelete);
+			}
+			else
+			{
+				in.nextLine(); // clear scanner buffer
+				System.out.print("Please type in the make: ");
+				String make = in.nextLine();
+				System.out.print("Please type in the model: ");
+				String model = in.nextLine();
+				System.out.print("Please type in the year (number): ");
+				int year = in.nextInt();
+				System.out.print("Please type in the price (number): $");
+				double price = in.nextDouble();
+				System.out.print("Please type in the range (number): ");
+				int range = in.nextInt();
+				System.out.print("Please type in the top speed (number): ");
+				int topspeed = in.nextInt();
+				System.out.print("Please type in the 0-60 acceleration (number): ");
+				double zerosixtyacceleration = in.nextDouble();
+				System.out.print("Please type in the charge speed (number): ");
+				int chargepower = in.nextInt();
+				ElectricCar toDelete = new ElectricCar(make, model, year, price, range, topspeed, zerosixtyacceleration, chargepower);
+				ech.deleteCar(toDelete);
+			}
 		}
-		else
+		catch (java.lang.NullPointerException n)
 		{
-			System.out.print("Please type in the make: ");
-			String make = in.nextLine();
-			System.out.print("Please type in the model: ");
-			String model = in.nextLine();
-			System.out.print("Please type in the year: ");
-			int year = in.nextInt();
-			System.out.print("Please type in the price: ");
-			double price = in.nextDouble();
-			System.out.print("Please type in the range: ");
-			int range = in.nextInt();
-			System.out.print("Please type in the top speed: ");
-			int topspeed = in.nextInt();
-			System.out.print("Please type in the 0-60 acceleration: ");
-			double zerosixtyacceleration = in.nextDouble();
-			System.out.print("Please type in the charge speed: ");
-			int chargepower = in.nextInt();
-			ElectricCar toDelete = new ElectricCar(make, model, year, price, range, topspeed, zerosixtyacceleration, chargepower);
-			ech.deleteCar(toDelete);
+			System.out.println("A electric car with that ID doesn't exist. The list wasn't changed.");
+		}
+		catch (InputMismatchException i)
+		{
+			System.out.println("Your input wasn't correct. Please type in a word or a number where stated. The list wasn't changed");
+		}
+		catch (javax.persistence.NoResultException e)
+		{
+			System.out.println("A matching electric car couldn't be found. The list wasn't changed.");
 		}
 	}
 	
-	private static void viewCars() // TODO not working, error with sql syntax
+	private static void viewCars()
 	{
 		List<ElectricCar> allCars = ech.showAllCars();
 		

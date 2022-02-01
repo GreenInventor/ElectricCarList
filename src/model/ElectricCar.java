@@ -33,8 +33,8 @@ public class ElectricCar
 	@Column(name="PRICE")
 	private double price;
 	
-	@Column(name="RANGE")
-	private int range;
+	@Column(name="MAXMILES")
+	private int maxmiles;
 	
 	@Column(name="TOPSPEED")
 	private int topspeed;
@@ -58,19 +58,19 @@ public class ElectricCar
 	 * @param model
 	 * @param year
 	 * @param price
-	 * @param range
+	 * @param maxmiles
 	 * @param topspeed
 	 * @param zerosixtyacceleration
 	 * @param chargepower
 	 */
-	public ElectricCar(String make, String model, int year, double price, int range, int topspeed,
+	public ElectricCar(String make, String model, int year, double price, int maxmiles, int topspeed,
 			double zerosixtyacceleration, int chargepower) {
 		super();
 		this.make = make;
 		this.model = model;
 		this.year = year;
 		this.price = price;
-		this.range = range;
+		this.maxmiles = maxmiles;
 		this.topspeed = topspeed;
 		this.zerosixtyacceleration = zerosixtyacceleration;
 		this.chargepower = chargepower;
@@ -133,17 +133,17 @@ public class ElectricCar
 	}
 
 	/**
-	 * @return the range
+	 * @return the maxmiles
 	 */
-	public int getRange() {
-		return range;
+	public int getMaxmiles() {
+		return maxmiles;
 	}
 
 	/**
-	 * @param range the range to set
+	 * @param maxmiles the maxmiles to set
 	 */
-	public void setRange(int range) {
-		this.range = range;
+	public void setMaxmiles(int maxmiles) {
+		this.maxmiles = maxmiles;
 	}
 
 	/**
@@ -203,9 +203,9 @@ public class ElectricCar
 	}
 
 	public String getCarDetails() {
-		return "[make=" + make + ", model=" + model + ", year=" + year + ", price=" + price
-				+ ", range=" + range + ", topspeed=" + topspeed + ", zerosixtyacceleration=" + zerosixtyacceleration
-				+ ", chargepower=" + chargepower + "]";
+		return "[Make: " + make + ", Model: " + model + ", Year: " + year + ", Price: $" + price
+				+ ", Range: " + maxmiles + " mile(s), Top Speed: " + topspeed + " mph, 0-60 Acceleration: " + zerosixtyacceleration
+				+ " sec, Charge Speed: " + chargepower + " watt(s)]";
 	}
 
 	

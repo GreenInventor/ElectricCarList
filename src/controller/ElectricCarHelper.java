@@ -39,7 +39,7 @@ public class ElectricCarHelper // TODO errors with sql syntax
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
 		TypedQuery<ElectricCar> typedQuery = em.createQuery("select ec from ElectricCar ec where ec.make = :selectedMake "
-				+ "and ec.model = :selectedModel and ec.year = :selectedYear and ec.price = :selectedPrice and ec.range = :selectedRange "
+				+ "and ec.model = :selectedModel and ec.year = :selectedYear and ec.price = :selectedPrice and ec.maxmiles = :selectedMaxmiles "
 				+ "and ec.topspeed = :selectedTopspeed and ec.zerosixtyacceleration = :selectedZerosixtyacceleration "
 				+ "and ec.chargepower = :selectedChargepower", ElectricCar.class); // TODO how to select multiple items?
 		
@@ -48,7 +48,7 @@ public class ElectricCarHelper // TODO errors with sql syntax
 		typedQuery.setParameter("selectedModel", toDelete.getModel());
 		typedQuery.setParameter("selectedYear", toDelete.getYear());
 		typedQuery.setParameter("selectedPrice", toDelete.getPrice());
-		typedQuery.setParameter("selectedRange", toDelete.getRange());
+		typedQuery.setParameter("selectedMaxmiles", toDelete.getMaxmiles());
 		typedQuery.setParameter("selectedTopspeed", toDelete.getTopspeed());
 		typedQuery.setParameter("selectedZerosixtyacceleration", toDelete.getZerosixtyacceleration());
 		typedQuery.setParameter("selectedChargepower", toDelete.getChargepower());
@@ -131,12 +131,12 @@ public class ElectricCarHelper // TODO errors with sql syntax
 		return foundElectricCars;
 	}
 	
-	public List<ElectricCar> searchForElectricCarByRange(int range) 
+	public List<ElectricCar> searchForElectricCarByMaxMiles(int maxmiles) 
 	{
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		TypedQuery<ElectricCar> typedQuery = em.createQuery("select ec from ElectricCar ec where ec.range = :selectedRange", ElectricCar.class);
-		typedQuery.setParameter("selectedRange", range);
+		TypedQuery<ElectricCar> typedQuery = em.createQuery("select ec from ElectricCar ec where ec.maxmiles = :selectedMaxmiles", ElectricCar.class);
+		typedQuery.setParameter("selectedMaxmiles", maxmiles);
 		
 		List<ElectricCar> foundElectricCars = typedQuery.getResultList();
 		em.close();
