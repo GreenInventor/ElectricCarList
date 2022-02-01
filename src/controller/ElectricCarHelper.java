@@ -14,7 +14,7 @@ import model.ElectricCar;
  * CIS175 or CIS152 - SPRING
  * Jan 31, 2022
  */
-public class ElectricCarHelper // TODO errors with sql syntax
+public class ElectricCarHelper
 {
 	static EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("ElectricCarList");
 	
@@ -41,7 +41,7 @@ public class ElectricCarHelper // TODO errors with sql syntax
 		TypedQuery<ElectricCar> typedQuery = em.createQuery("select ec from ElectricCar ec where ec.make = :selectedMake "
 				+ "and ec.model = :selectedModel and ec.year = :selectedYear and ec.price = :selectedPrice and ec.maxmiles = :selectedMaxmiles "
 				+ "and ec.topspeed = :selectedTopspeed and ec.zerosixtyacceleration = :selectedZerosixtyacceleration "
-				+ "and ec.chargepower = :selectedChargepower", ElectricCar.class); // TODO how to select multiple items?
+				+ "and ec.chargepower = :selectedChargepower", ElectricCar.class);
 		
 		//Substitute parameter with actual data from the toDelete item
 		typedQuery.setParameter("selectedMake", toDelete.getMake());
